@@ -12,6 +12,11 @@ return {
       require "configs.lspconfig"
     end,
   },
+  
+
+
+  -- MY SHIT
+  -- lazygit
   {
     "kdheepak/lazygit.nvim",
     lazy = true,
@@ -32,6 +37,7 @@ return {
         { "<leader>gg", "<cmd>LazyGit<cr>", desc = "Open LazyGit" }
     }
   },
+  -- duck
   {
     'tamton-aquib/duck.nvim',
     keys = {
@@ -40,14 +46,17 @@ return {
       {"<leader>da", "<cmd>lua require('duck').cook_all()<cr>", desc = "cook all ducks"}
     }
   },
+  -- todo comment highlighter
   {
   "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
+  -- add scrollbars (TODO: FIX)
   {
     "petertriho/nvim-scrollbar",
     config = function() require("scrollbar").setup() end
   },
+  -- java lsp and lint and dap and stuff
   {
     "nvim-java/nvim-java",
     config = function() require('java').setup() end
