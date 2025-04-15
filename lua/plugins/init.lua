@@ -48,4 +48,8 @@ return {
     "petertriho/nvim-scrollbar",
     config = function() require("scrollbar").setup() end
   },
+  {
+    "nvim-java/nvim-java",
+    config = function() require('java').setup() end
+  }
 }
