@@ -43,5 +43,9 @@ return {
   {
   "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-  }
+  },
+  {
+    "petertriho/nvim-scrollbar",
+    config = function() require("scrollbar").setup() end
+  },
 }

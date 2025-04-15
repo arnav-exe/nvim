@@ -17,3 +17,6 @@ map("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "Open LazyGit" })
 
 -- use system clipboard
 vim.opt.clipboard = "unnamedplus"
+
+-- "ctrl+backspace" for delete word from right to left
+vim.keymap.set("i", "<C-H>", "<C-W>", { noremap = true })
