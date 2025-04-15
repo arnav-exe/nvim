@@ -9,7 +9,7 @@ local nvlsp = require "nvchad.configs.lspconfig"
 
 -- JAVA
 lspconfig.jdtls.setup({})
-💀
+
 -- lsps with default config
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
