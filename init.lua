@@ -44,5 +44,5 @@ vim.opt["tabstop"] = 4
 vim.opt["shiftwidth"] = 4
 
 -- relative numbers on columns
-vim.opt.number = true
+vim.opt.nu = true
 vim.opt.relativenumber = true
