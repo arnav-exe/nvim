@@ -39,6 +39,9 @@ return {
       {"<leader>dc", "<cmd>lua require('duck').cook()<cr>", desc = "cook a duck"},
       {"<leader>da", "<cmd>lua require('duck').cook_all()<cr>", desc = "cook all ducks"}
     }
+  },
+  {
+  "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
   }
-
 }
