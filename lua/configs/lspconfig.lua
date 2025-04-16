@@ -10,6 +10,9 @@ local nvlsp = require "nvchad.configs.lspconfig"
 -- JAVA
 lspconfig.jdtls.setup({})
 
+-- PYTHON
+vim.lsp.enable('pyright')
+
 -- lsps with default config
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {

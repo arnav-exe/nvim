@@ -51,6 +51,11 @@ return {
   "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
+  -- disable lazy load on whichkey
+  {
+    "folke/which-key.nvim",
+    lazy = false
+  },
   -- add scrollbars (TODO: FIX)
   {
     "petertriho/nvim-scrollbar",
@@ -60,5 +65,9 @@ return {
   {
     "nvim-java/nvim-java",
     config = function() require('java').setup() end
+  },
+  -- copilot
+  {
+    "github/copilot.vim"
   }
 }
