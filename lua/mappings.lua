@@ -4,7 +4,7 @@ require "nvchad.mappings"
 
 local map = vim.keymap.set
 
-map("n", ";", ":", { desc = "CMD enter command mode" })
+-- map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
@@ -20,3 +20,10 @@ vim.opt.clipboard = "unnamedplus"
 
 -- "ctrl+backspace" for delete word from right to left
 vim.keymap.set("i", "<C-H>", "<C-W>", { noremap = true })
+
+-- "<leader>F" to format entire file
+map("n", "<leader>F", function()
+    require("conform").format({ lsp_fallback = true })
+end, { desc = "Format entire file"})
+
+

@@ -46,7 +46,3 @@ vim.opt["shiftwidth"] = 4
 -- relative numbers on columns
 vim.opt.nu = true
 vim.opt.relativenumber = true
-
--- disable code wrap (disabling disable code wrap until I find a better solution to horizontally scroll)
--- vim.o.wrap = false
--- vim.wo.wrap = false
