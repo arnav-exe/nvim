@@ -3,7 +3,9 @@
 -- Please read that file to know all available options :( 
 
 ---@type ChadrcConfig
-local M = {}
+local M = {
+    autocmds = require("configs.autocmds")
+}
 
 M.base46 = {
 	theme = "material-darker",
@@ -20,15 +22,5 @@ M.base46 = {
 --          lazyload = false
 --      }
 --}
-
-M.lua_ls = {
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { "vim" },
-      },
-    },
-  },
-}
 
 return M
