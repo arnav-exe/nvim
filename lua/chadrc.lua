@@ -10,17 +10,23 @@ local M = {
 M.base46 = {
 	theme = "material-darker",
 
-	-- hl_override = {
-	-- 	Comment = { italic = true },
-	-- 	["@comment"] = { italic = true },
-	-- },
+	hl_override = {
+		Comment = { italic = true },
+		["@comment"] = { italic = true },
+	},
 }
 
--- M.nvdash = { load_on_startup = true }
--- M.ui = {
---       tabufline = {
---          lazyload = false
---      }
---}
+-- startup dashboard
+M.nvdash = { load_on_startup = true }
+M.ui = {
+      tabufline = {
+         lazyload = false
+     }
+}
+
+-- configure term sizes
+M.term = {
+   sizes = { sp = 0.35, vsp = 0.4},
+ }
 
 return M
