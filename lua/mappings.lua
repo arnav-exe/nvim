@@ -16,33 +16,10 @@ map("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "Open LazyGit" })
 -- use system clipboard
 vim.opt.clipboard = "unnamedplus"
 
--- "ctrl+backspace" for delete word from right to left
-vim.keymap.set("i", "<C-H>", "<C-W>", { noremap = true })
-
 -- "<leader>F" to format entire file in normal mode
 map("n", "<leader>F", function()
   require("conform").format { lsp_fallback = true }
 end, { desc = "Format entire file" })
-
--- "<leader>F" to format selected text in visual mode
-map("v", "<leader>F", function()
-  local start_line = vim.fn.line "v"
-  local end_line = vim.fn.line "."
-
-  -- ensure the range is in correct order (start <= end)
-  if start_line > end_line then
-    start_line, end_line = end_line, start_line
-  end
-
-  -- format selected range
-  require("conform").format {
-    lsp_fallback = true,
-    range = {
-      start = { start_line, 0 },
-      ["end"] = { end_line, 0 },
-    },
-  }
-end, { desc = "Format selected lines" })
 
 -- "<leader>dvd" for dvd screensaver
 map("n", "<leader>dvd", "<cmd>Zone dvd<CR>", { desc = "DVD Screensaver" })
@@ -57,3 +34,11 @@ map("n", "<leader>mt", "<cmd>MarkdownPreviewToggle<CR>", { desc = "Toggle markdo
 
 -- prevent autocomment on newline (TODO: implement)
 
+-- "<leader>ca" to bring up quickfix menu for current line
+-- map("n", "<leader>ca", function()
+--   vim.lsp.buf.code_action({ context = { only = { "quickfix" } }})
+-- end, { desc = "LSP: Show code actions (quickfix)" })
+-- "<leader>ca" to automatically select first quickfix on selected line
+map("n", "<leader>ca", function()
+  vim.lsp.buf.code_action({ apply = true, context = { only = { "quickfix" } }})
+end, { desc = "LSP: Apply first available quickfix" })
