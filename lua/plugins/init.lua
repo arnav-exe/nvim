@@ -115,12 +115,21 @@ return {
 	-- 		"rcarriga/nvim-notify",
 	-- 	},
 	-- },
-    -- live preview for html (CURRENTLY BROKEN: attempts to boot powershell using 'pwsh' command which only works on PowerShell 5. I am using PowerShell 7)
+	-- live preview for html (CURRENTLY BROKEN: attempts to boot powershell using 'pwsh' command which only works on PowerShell 5. I am using PowerShell 7)
 	-- {
 	-- 	"brianhuster/live-preview.nvim",
 	-- 	dependencies = {
 	-- 		-- You can choose one of the following pickers
 	-- 		"nvim-telescope/telescope.nvim",
 	-- 	},
+	-- },
+	-- vim golf
+	{
+		"vuciv/golf",
+	},
+	-- makes c, d, s, x operations all use black hole register (CURRENTLY BROKEN)
+	-- {
+	--     "gbprod/cutlass.nvim",
+	--     lazy = false
 	-- },
 }

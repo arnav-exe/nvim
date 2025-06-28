@@ -56,3 +56,4 @@ map("n", "<leader>ms", "<cmd>MarkdownPreviewStop<CR>", { desc = "Stop markdown p
 map("n", "<leader>mt", "<cmd>MarkdownPreviewToggle<CR>", { desc = "Toggle markdown preview" })
 
 -- prevent autocomment on newline (TODO: implement)
+
