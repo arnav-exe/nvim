@@ -32,6 +32,9 @@ map("n", "<leader>mp", "<cmd>MarkdownPreview<CR>", { desc = "Start markdown prev
 map("n", "<leader>ms", "<cmd>MarkdownPreviewStop<CR>", { desc = "Stop markdown preview" })
 map("n", "<leader>mt", "<cmd>MarkdownPreviewToggle<CR>", { desc = "Toggle markdown preview" })
 
+-- "ctrl+backspace" for delete word from right to left
+vim.keymap.set("i", "<C-H>", "<C-W>", { noremap = true })
+
 -- prevent autocomment on newline (TODO: implement)
 
 -- "<leader>ca" to bring up quickfix menu for current line
