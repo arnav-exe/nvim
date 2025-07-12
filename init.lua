@@ -46,3 +46,15 @@ vim.opt["shiftwidth"] = 4
 -- relative numbers on columns
 vim.opt.nu = true
 vim.opt.relativenumber = true
+
+-- ":exp" to open windows explorer in current project dir
+vim.api.nvim_create_user_command(
+  "Exp",
+  function()
+    vim.cmd("silent !start explorer .")
+  end,
+    {
+        desc = "Open Windows Explorer silently",
+        force = true
+    }
+)
