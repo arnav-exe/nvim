@@ -49,7 +49,7 @@ vim.opt.relativenumber = true
 
 -- ":exp" to open windows explorer in current project dir
 vim.api.nvim_create_user_command(
-  "Exp",
+  "EXP",
   function()
     vim.cmd("silent !start explorer .")
   end,

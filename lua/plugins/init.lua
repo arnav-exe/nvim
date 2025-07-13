@@ -116,13 +116,14 @@ return {
 	-- 	},
 	-- },
 	-- live preview for html (CURRENTLY BROKEN: attempts to boot powershell using 'pwsh' command which only works on PowerShell 5. I am using PowerShell 7)
-	-- {
-	-- 	"brianhuster/live-preview.nvim",
-	-- 	dependencies = {
-	-- 		-- You can choose one of the following pickers
-	-- 		"nvim-telescope/telescope.nvim",
-	-- 	},
-	-- },
+	{
+		"brianhuster/live-preview.nvim",
+		dependencies = {
+			-- You can choose one of the following pickers
+			"nvim-telescope/telescope.nvim",
+		},
+        lazy = false,
+	},
 	-- vim golf
 	{
 		"vuciv/golf",
