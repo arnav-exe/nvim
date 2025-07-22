@@ -122,15 +122,18 @@ return {
 			-- You can choose one of the following pickers
 			"nvim-telescope/telescope.nvim",
 		},
-        lazy = false,
+		lazy = false,
 	},
 	-- vim golf
 	{
 		"vuciv/golf",
 	},
-	-- makes c, d, s, x operations all use black hole register (CURRENTLY BROKEN)
-	-- {
-	--     "gbprod/cutlass.nvim",
-	--     lazy = false
-	-- },
+	{
+		"lervag/vimtex",
+		lazy = false, -- we don't want to lazy load VimTeX
+		init = function()
+			-- VimTeX configuration goes here, e.g.
+			vim.g.vimtex_view_method = "general"
+		end,
+	},
 }
