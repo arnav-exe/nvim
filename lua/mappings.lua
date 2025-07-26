@@ -47,4 +47,4 @@ map("n", "<leader>ca", function()
 end, { desc = "LSP: Apply first available quickfix" })
 
 -- "<leader>wc" for vimtex word count (uses texcount)
-map("n", "<leader>wc", "<cmd>VimtexWordCount<CR>", { desc = "Print word count for latex project" })
+map("n", "<leader>wc", "<cmd>VimtexCountWords<CR>", { desc = "Print word count for latex project" })
