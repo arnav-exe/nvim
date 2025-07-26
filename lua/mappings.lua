@@ -45,3 +45,6 @@ vim.keymap.set("i", "<C-H>", "<C-W>", { noremap = true })
 map("n", "<leader>ca", function()
   vim.lsp.buf.code_action({ apply = true, context = { only = { "quickfix" } }})
 end, { desc = "LSP: Apply first available quickfix" })
+
+-- "<leader>wc" for vimtex word count (uses texcount)
+map("n", "<leader>wc", "<cmd>VimtexWordCount<CR>", { desc = "Print word count for latex project" })
