@@ -5,8 +5,8 @@ vim.g.mapleader = " "
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
 if not vim.uv.fs_stat(lazypath) then
-  local repo = "https://github.com/folke/lazy.nvim.git"
-  vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
+    local repo = "https://github.com/folke/lazy.nvim.git"
+    vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
 end
 
 vim.opt.rtp:prepend(lazypath)
@@ -15,14 +15,14 @@ local lazy_config = require "configs.lazy"
 
 -- load plugins
 require("lazy").setup({
-  {
-    "NvChad/NvChad",
-    lazy = false,
-    branch = "v2.5",
-    import = "nvchad.plugins",
-  },
+    {
+        "NvChad/NvChad",
+        lazy = false,
+        branch = "v2.5",
+        import = "nvchad.plugins",
+    },
 
-  { import = "plugins" },
+    { import = "plugins" },
 }, lazy_config)
 
 -- load theme
@@ -33,7 +33,7 @@ require "options"
 require "nvchad.autocmds"
 
 vim.schedule(function()
-  require "mappings"
+    require "mappings"
 end)
 
 
@@ -47,14 +47,46 @@ vim.opt["shiftwidth"] = 4
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
--- ":exp" to open windows explorer in current project dir
+-- ":EXP" to open windows explorer in current project dir
 vim.api.nvim_create_user_command(
-  "EXP",
-  function()
-    vim.cmd("silent !start explorer .")
-  end,
+    "EXP",
+    function()
+        vim.cmd("silent !start explorer .")
+    end,
     {
-        desc = "Open Windows Explorer silently",
+        desc = "Open a new Windows Explorer instance in your current directory",
         force = true
     }
 )
+
+-- ":TERM" to launch new term instance in current project dir
+vim.api.nvim_create_user_command(
+    "TERM",
+    function()
+        vim.cmd("silent !start wt -F -d .")
+    end,
+    {
+        desc = "Open a new Windows Terminal instance in your current directory",
+        force = true
+    }
+)
+
+
+
+
+-- set telescope ff to vertical
+require("telescope").setup({
+    defaults = {
+        path_display = { "smart" },
+        dynamic_preview_title = true,
+        sorting_strategy = "ascending",
+        layout_strategy = "vertical",
+        layout_config = {
+            prompt_position = "bottom",
+            height = 0.95,
+        },
+    }
+})
+
+-- keep 4 lines between cursor and page border
+vim.opt.scrolloff = 4
