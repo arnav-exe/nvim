@@ -39,11 +39,6 @@ return {
 	-- duck
 	{
 		"tamton-aquib/duck.nvim",
-		keys = {
-			{ "<leader>dh", "<cmd>lua require('duck').hatch()<cr>", desc = "spawn a duck" },
-			{ "<leader>dc", "<cmd>lua require('duck').cook()<cr>", desc = "cook a duck" },
-			{ "<leader>da", "<cmd>lua require('duck').cook_all()<cr>", desc = "cook all ducks" },
-		},
 	},
 	-- todo comment highlighter
 	{
@@ -75,10 +70,6 @@ return {
 			require("java").setup()
 		end,
 	},
-	-- copilot
-	{
-		"github/copilot.vim",
-	},
 	-- DVD screensaver
 	{
 		"arnav-exe/zone.nvim",
@@ -99,22 +90,6 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
 	},
-	-- better UI for messages, cmdline and popupmenu
-	-- {
-	-- 	"folke/noice.nvim",
-	-- 	event = "VeryLazy",
-	-- 	opts = {
-	-- 		-- add any options here
-	-- 	},
-	-- 	dependencies = {
-	-- 		-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-	-- 		"MunifTanjim/nui.nvim",
-	-- 		-- OPTIONAL:
-	-- 		--   `nvim-notify` is only needed, if you want to use the notification view.
-	-- 		--   If not available, we use `mini` as the fallback
-	-- 		"rcarriga/nvim-notify",
-	-- 	},
-	-- },
 	-- live preview for html (CURRENTLY BROKEN: attempts to boot powershell using 'pwsh' command which only works on PowerShell 5. I am using PowerShell 7)
 	{
 		"brianhuster/live-preview.nvim",
@@ -124,10 +99,6 @@ return {
 		},
 		lazy = false,
 	},
-	-- vim golf
-	{
-		"vuciv/golf",
-	},
 	{
 		"lervag/vimtex",
 		lazy = false, -- we don't want to lazy load VimTeX
@@ -135,5 +106,226 @@ return {
 			-- VimTeX configuration goes here, e.g.
 			vim.g.vimtex_view_method = "general"
 		end,
+	},
+	-- autogenerate gitignores
+	{
+		"wintermute-cell/gitignore.nvim",
+		config = function()
+			require("gitignore")
+		end,
+	},
+	{
+		"nickjvandyke/opencode.nvim",
+		lazy = false,
+		version = "*", -- Latest stable release
+		dependencies = {
+			{
+				-- `snacks.nvim` integration is recommended, but optional
+				---@module "snacks" <- Loads `snacks.nvim` types for configuration intellisense
+				"folke/snacks.nvim",
+				optional = true,
+				opts = {
+					input = {}, -- Enhances `ask()`
+					picker = { -- Enhances `select()`
+						actions = {
+							opencode_send = function(...)
+								return require("opencode").snacks_picker_send(...)
+							end,
+						},
+						win = {
+							input = {
+								keys = {
+									["<a-a>"] = { "opencode_send", mode = { "n", "i" } },
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		config = function()
+			---@type opencode.Opts
+			vim.g.opencode_opts = {
+				-- Your configuration, if any; goto definition on the type or field for details
+			}
+
+			vim.o.autoread = true -- Required for `opts.events.reload`
+
+			-- Recommended/example keymaps
+			vim.keymap.set({ "n", "x" }, "<leader>oa", function()
+				require("opencode").ask("@this: ", { submit = true })
+			end, { desc = "Ask opencode…" })
+			vim.keymap.set({ "n", "x" }, "<leader>ox", function()
+				require("opencode").select()
+			end, { desc = "Execute opencode action…" })
+			vim.keymap.set({ "n", "x" }, "<C-o>", function()
+
+				require("opencode").toggle()
+			end, { desc = "Toggle opencode" })
+
+			vim.keymap.set({ "n", "x" }, "go", function()
+				return require("opencode").operator("@this ")
+			end, { desc = "Add range to opencode", expr = true })
+			vim.keymap.set("n", "goo", function()
+				return require("opencode").operator("@this ") .. "_"
+			end, { desc = "Add line to opencode", expr = true })
+
+			vim.keymap.set("n", "<S-C-u>", function()
+				require("opencode").command("session.half.page.up")
+			end, { desc = "Scroll opencode up" })
+			vim.keymap.set("n", "<S-C-d>", function()
+				require("opencode").command("session.half.page.down")
+			end, { desc = "Scroll opencode down" })
+		end,
+	},
+	{
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
+		---@type snacks.Config
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+			bigfile = { enabled = true },
+			indent = {
+				enabled = true,
+				animate = {
+					enabled = false,
+				},
+			},
+			input = { enabled = true },
+			picker = { enabled = true },
+			notifier = { enabled = true },
+			quickfile = { enabled = true },
+			scope = { enabled = true },
+			statuscolumn = { enabled = true },
+			words = { enabled = true },
+		},
+		keys = {
+			-- Top Pickers & Explorer
+			{
+				"<leader><space>",
+				function()
+					Snacks.picker.smart()
+				end,
+				desc = "Smart Find Files",
+			},
+			{
+				"<leader>,",
+				function()
+					Snacks.picker.buffers()
+				end,
+				desc = "Buffers",
+			},
+			{
+				"<leader>/",
+				function()
+					Snacks.picker.grep()
+				end,
+				desc = "Grep",
+			},
+			{
+				"<leader>;",
+				function()
+					Snacks.picker.command_history()
+				end,
+				desc = "Command History",
+			},
+			{
+				"<leader>fg",
+				function()
+					Snacks.picker.git_files()
+				end,
+				desc = "Find Git Files",
+			},
+			{
+				"<leader>fp",
+				function()
+					Snacks.picker.projects()
+				end,
+				desc = "Projects",
+			},
+			{
+				"<leader>fr",
+				function()
+					Snacks.picker.recent()
+				end,
+				desc = "Recent",
+			},
+			-- git
+			{
+				"<leader>gb",
+				function()
+					Snacks.picker.git_branches()
+				end,
+				desc = "Git Branches",
+			},
+			{
+				"<leader>gl",
+				function()
+					Snacks.picker.git_log()
+				end,
+				desc = "Git Log",
+			},
+			-- broken
+			-- {
+			-- 	"<leader>gL",
+			-- 	function()
+			-- 		Snacks.picker.git_log_line()
+			-- 	end,
+			-- 	desc = "Git Log Line",
+			-- },
+			{
+				"<leader>gs",
+				function()
+					Snacks.picker.git_status()
+				end,
+				desc = "Git Status",
+			},
+			{
+				"<leader>gd",
+				function()
+					Snacks.picker.git_diff()
+				end,
+				desc = "Git Diff (Hunks)",
+			},
+			{
+				"<leader>gf",
+				function()
+					Snacks.picker.git_log_file()
+				end,
+				desc = "Git Log File",
+			},
+			-- gh
+			{
+				"<leader>ghi",
+				function()
+					Snacks.picker.gh_issue()
+				end,
+				desc = "GitHub Issues (open)",
+			},
+			{
+				"<leader>ghI",
+				function()
+					Snacks.picker.gh_issue({ state = "all" })
+				end,
+				desc = "GitHub Issues (all)",
+			},
+			{
+				"<leader>ghp",
+				function()
+					Snacks.picker.gh_pr()
+				end,
+				desc = "GitHub Pull Requests (open)",
+			},
+			{
+				"<leader>ghP",
+				function()
+					Snacks.picker.gh_pr({ state = "all" })
+				end,
+				desc = "GitHub Pull Requests (all)",
+			},
+		},
 	},
 }

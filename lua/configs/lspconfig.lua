@@ -29,13 +29,32 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-require('mason').setup({})
-require('mason-lspconfig').setup({
+require("mason").setup()
+
+-- mason setup
+require("mason").setup()
+require("mason-lspconfig").setup({
   handlers = {
     function(server_name)
-      require('lspconfig')[server_name].setup({})
+      if server_name ~= "pylsp" then
+        require("lspconfig")[server_name].setup({})
+      end
     end,
-  }
+  },
+})
+
+-- configure pylsp settings (without starting a new client)
+vim.lsp.config("pylsp", {
+  settings = {
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          enabled = true,
+          ignore = { "E501", "E302", "E303", "W291" },
+        },
+      },
+    },
+  },
 })
 
 ---

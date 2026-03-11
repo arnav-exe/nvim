@@ -35,16 +35,20 @@ map("n", "<leader>mt", "<cmd>MarkdownPreviewToggle<CR>", { desc = "Toggle markdo
 -- "ctrl+backspace" for delete word from right to left
 vim.keymap.set("i", "<C-H>", "<C-W>", { noremap = true })
 
--- prevent autocomment on newline (TODO: implement)
-
 -- "<leader>ca" to bring up quickfix menu for current line
--- map("n", "<leader>ca", function()
---   vim.lsp.buf.code_action({ context = { only = { "quickfix" } }})
--- end, { desc = "LSP: Show code actions (quickfix)" })
--- "<leader>ca" to automatically select first quickfix on selected line
 map("n", "<leader>ca", function()
   vim.lsp.buf.code_action({ apply = true, context = { only = { "quickfix" } }})
 end, { desc = "LSP: Apply first available quickfix" })
 
 -- "<leader>wc" for vimtex word count (uses texcount)
 map("n", "<leader>wc", "<cmd>VimtexCountWords<CR>", { desc = "Print word count for latex project" })
+
+-- "<leader>gi to open gitignore generation menu"
+local gitignore = require("gitignore")
+vim.keymap.set("n", "<leader>gi", gitignore.generate, { desc = "Generate .gitignore file" })
+
+
+-- duck related commands (v important)
+vim.keymap.set('n', '<leader>dh', function() require("duck").hatch("🐤", 5) end, { desc = "hatch a duck" })
+vim.keymap.set('n', '<leader>dc', function() require("duck").cook() end, { desc = "cook a duck" })
+vim.keymap.set('n', '<leader>da', function() require("duck").cook_all() end, { desc = "cool all ducks" })
