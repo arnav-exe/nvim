@@ -54,6 +54,11 @@ return {
     {
         "folke/which-key.nvim",
         lazy = false,
+        opts = {
+            spec = {
+                { "<leader>gc", group = "conflict" },
+            },
+        },
     },
     -- hlslens (scrollbar dependency)
     {
@@ -120,25 +125,6 @@ return {
         },
         lazy = false,
     },
-    -- vim golf
-    {
-        "vuciv/golf",
-    },
-    -- makes c, d, s, x operations all use black hole register (CURRENTLY BROKEN)
-    -- {
-    --     "gbprod/cutlass.nvim",
-    --     lazy = false
-    -- },
-    -- for flutter
-    {
-        'nvim-flutter/flutter-tools.nvim',
-        lazy = false,
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'stevearc/dressing.nvim', -- optional for vim.ui.select
-        },
-        config = true,
-    },
     -- mirror inserts to end of word object
     {
         "kylechui/nvim-surround",
@@ -158,33 +144,123 @@ return {
             lazy = false
         }
     },
-    -- keyword highlighting (TODO, FIXME, BUG. etc.)
+    -- automatic gitignore generation
     {
-        "folke/todo-comments.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        lazy = false
-    },
-    -- telescope config
-    {
-        "nvim-telescope/telescope.nvim",
-        opts = function()
-            return require("configs.telescope")
+        "wintermute-cell/gitignore.nvim",
+        config = function()
+            require('gitignore')
         end,
     },
-    -- nvimtree config
+    -- visual git conflict handler
     {
-        "nvim-tree/nvim-tree.lua",
-        opts = function(_, opts)
-            opts.filters = opts.filters or {}
-            opts.filters.dotfiles = false
-            opts.filters.git_ignored = false
-
-            opts.git = opts.git or {}
-            opts.git.enable = true
-            opts.git.ignore = false
-
-            return opts
-        end,
+        'akinsho/git-conflict.nvim',
+        version = "*",
+        config = true,
+        lazy = false,
+        opts = {
+            default_mappings = false,
+        },
+        keys = {
+            { "<leader>gco", "<Plug>(git-conflict-ours)",          desc = "Choose Ours" },
+            { "<leader>gct", "<Plug>(git-conflict-theirs)",        desc = "Choose Theirs" },
+            { "<leader>gcb", "<Plug>(git-conflict-both)",          desc = "Choose Both" },
+            { "<leader>gc0", "<Plug>(git-conflict-none)",          desc = "Choose None" },
+            { "]x",          "<Plug>(git-conflict-next-conflict)", desc = "Next Conflict" },
+            { "[x",          "<Plug>(git-conflict-prev-conflict)", desc = "Previous Conflict" },
+            { "<leader>gcq", "<cmd>GitConflictListQf<cr>",         desc = "Conflicts to Quickfix" },
+        },
     },
-
+    {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        ---@type snacks.Config
+        opts = {
+            bigfile = { enabled = true },
+            indent = {
+                enabled = true,
+                animate = {
+                    enabled = false,
+                }
+            },
+            input = { enabled = true },
+            notifier = {
+                enabled = true,
+                timeout = 3000,
+            },
+            picker = { enabled = true },
+            quickfile = { enabled = true },
+            scope = { enabled = true },
+            statuscolumn = { enabled = true },
+            words = { enabled = true },
+            styles = {
+                notification = {
+                    -- wo = { wrap = true } -- Wrap notifications
+                }
+            }
+        },
+        keys = {
+            -- Top Pickers & Explorer
+            { "<leader><space>", function() Snacks.picker.smart() end,                                   desc = "Smart Find Files" },
+            { "<leader>,",       function() Snacks.picker.buffers() end,                                 desc = "Buffers" },
+            { "<leader>/",       function() Snacks.picker.grep() end,                                    desc = "Grep" },
+            { "<leader>;",       function() Snacks.picker.command_history() end,                         desc = "Command History" },
+            { "<leader>n",       function() Snacks.picker.notifications() end,                           desc = "Notification History" },
+            { "<leader>e",       function() Snacks.explorer() end,                                       desc = "File Explorer" },
+            -- find
+            { "<leader>fb",      function() Snacks.picker.buffers() end,                                 desc = "Buffers" },
+            { "<leader>fc",      function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
+            { "<leader>fg",      function() Snacks.picker.git_files() end,                               desc = "Find Git Files" },
+            { "<leader>fp",      function() Snacks.picker.projects() end,                                desc = "Projects" },
+            { "<leader>fr",      function() Snacks.picker.recent() end,                                  desc = "Recent" },
+            -- git
+            { "<leader>gb",      function() Snacks.picker.git_branches() end,                            desc = "Git Branches" },
+            { "<leader>gl",      function() Snacks.picker.git_log() end,                                 desc = "Git Log" },
+            { "<leader>gL",      function() Snacks.picker.git_log_line() end,                            desc = "Git Log Line" },
+            { "<leader>gs",      function() Snacks.picker.git_status() end,                              desc = "Git Status" },
+            { "<leader>gS",      function() Snacks.picker.git_stash() end,                               desc = "Git Stash" },
+            { "<leader>gd",      function() Snacks.picker.git_diff() end,                                desc = "Git Diff (Hunks)" },
+            { "<leader>gf",      function() Snacks.picker.git_log_file() end,                            desc = "Git Log File" },
+            -- gh
+            { "<leader>ghi",     function() Snacks.picker.gh_issue() end,                                desc = "GitHub Issues (open)" },
+            { "<leader>ghI",     function() Snacks.picker.gh_issue({ state = "all" }) end,               desc = "GitHub Issues (all)" },
+            { "<leader>ghp",     function() Snacks.picker.gh_pr() end,                                   desc = "GitHub Pull Requests (open)" },
+            { "<leader>ghP",     function() Snacks.picker.gh_pr({ state = "all" }) end,                  desc = "GitHub Pull Requests (all)" },
+            -- Grep
+            { "<leader>sb",      function() Snacks.picker.lines() end,                                   desc = "Buffer Lines" },
+            { "<leader>sB",      function() Snacks.picker.grep_buffers() end,                            desc = "Grep Open Buffers" },
+            { "<leader>sg",      function() Snacks.picker.grep() end,                                    desc = "Grep" },
+            { "<leader>sw",      function() Snacks.picker.grep_word() end,                               desc = "Visual selection or word",   mode = { "n", "x" } },
+            -- other
+            { "<leader>un",      function() Snacks.notifier.hide() end,                                  desc = "Dismiss All Notifications" },
+            { "<c-/>",           function() Snacks.terminal() end,                                       desc = "Toggle Terminal" },
+            { "<c-_>",           function() Snacks.terminal() end,                                       desc = "which_key_ignore" },
+            { "]]",              function() Snacks.words.jump(vim.v.count1) end,                         desc = "Next Reference",             mode = { "n", "t" } },
+            { "[[",              function() Snacks.words.jump(-vim.v.count1) end,                        desc = "Prev Reference",             mode = { "n", "t" } },
+        },
+    },
+    {
+        "coder/claudecode.nvim",
+        dependencies = { "folke/snacks.nvim" },
+        config = true,
+        keys = {
+            { "<leader>a",  nil,                              desc = "Claude Code" },
+            { "<leader>ac", "<cmd>ClaudeCode<cr>",            desc = "Toggle Claude" },
+            { "<leader>af", "<cmd>ClaudeCodeFocus<cr>",       desc = "Focus Claude" },
+            { "<leader>ar", "<cmd>ClaudeCode --resume<cr>",   desc = "Resume Claude" },
+            { "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+            { "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+            { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>",       desc = "Add current buffer" },
+            { "<leader>as", "<cmd>ClaudeCodeSend<cr>",        mode = "v",                  desc = "Send to Claude" },
+            {
+                "<leader>as",
+                "<cmd>ClaudeCodeTreeAdd<cr>",
+                desc = "Add file",
+                ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
+            },
+            -- Diff management
+            { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+            { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>",   desc = "Deny diff" },
+        },
+    }
 }

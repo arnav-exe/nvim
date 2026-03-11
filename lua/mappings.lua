@@ -35,13 +35,24 @@ map("n", "<leader>mt", "<cmd>MarkdownPreviewToggle<CR>", { desc = "Toggle markdo
 -- "ctrl+backspace" for delete word from right to left
 vim.keymap.set("i", "<C-H>", "<C-W>", { noremap = true })
 
--- prevent autocomment on newline (TODO: implement)
-
 -- "<leader>ca" to bring up quickfix menu for current line
--- map("n", "<leader>ca", function()
---   vim.lsp.buf.code_action({ context = { only = { "quickfix" } }})
--- end, { desc = "LSP: Show code actions (quickfix)" })
--- "<leader>ca" to automatically select first quickfix on selected line
 map("n", "<leader>ca", function()
   vim.lsp.buf.code_action({ apply = true, context = { only = { "quickfix" } }})
 end, { desc = "LSP: Apply first available quickfix" })
+
+-- "<leader>gi" activate gitignore generation
+local gitignore = require("gitignore")
+vim.keymap.set("n", "<leader>gi", gitignore.generate)
+
+-- "]t" to jump to next TODO comment
+vim.keymap.set("n", "]t", function()
+  require("todo-comments").jump_next()
+end, { desc = "Next todo comment" })
+
+-- "]t" to jump to prev TODO comment
+vim.keymap.set("n", "[t", function()
+  require("todo-comments").jump_prev()
+end, { desc = "Previous todo comment" })
+
+
+vim.keymap.set('n', '<leader>cc', '<cmd>ClaudeCode<CR>', { desc = 'Toggle Claude Code' })
