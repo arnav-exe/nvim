@@ -71,9 +71,6 @@ vim.api.nvim_create_user_command(
     }
 )
 
-
-
-
 -- set telescope ff to vertical
 require("telescope").setup({
     defaults = {
@@ -90,3 +87,12 @@ require("telescope").setup({
 
 -- keep 4 lines between cursor and page border
 vim.opt.scrolloff = 4
+
+-- silently save current buffer on leaving insert mode
+vim.api.nvim_create_autocmd("InsertLeave", {
+    callback = function()
+        if vim.bo.modified and vim.bo.modifiable and vim.fn.expand("%") ~= "" then
+            vim.cmd("silent! write")
+        end
+    end,
+})
