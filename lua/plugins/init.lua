@@ -176,7 +176,6 @@ return {
         lazy = false,
         ---@type snacks.Config
         opts = {
-            bigfile = { enabled = true },
             indent = {
                 enabled = true,
                 animate = {
