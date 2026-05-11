@@ -158,8 +158,7 @@ return {
 			vim.keymap.set({ "n", "x" }, "<leader>ox", function()
 				require("opencode").select()
 			end, { desc = "Execute opencode action…" })
-			vim.keymap.set({ "n", "x" }, "<C-o>", function()
-
+			vim.keymap.set({ "n", "x" }, "<leader>oc", function()
 				require("opencode").toggle()
 			end, { desc = "Toggle opencode" })
 
@@ -327,5 +326,26 @@ return {
 				desc = "GitHub Pull Requests (all)",
 			},
 		},
+	},
+	{
+		"allaman/emoji.nvim",
+		version = "1.0.0", -- optionally pin to a tag
+		ft = "markdown", -- adjust to your needs
+		dependencies = {
+			-- util for handling paths
+			"nvim-lua/plenary.nvim",
+			-- optional for nvim-cmp integration
+			"hrsh7th/nvim-cmp",
+			-- optional for telescope integration
+			"nvim-telescope/telescope.nvim",
+			-- optional for fzf-lua integration via vim.ui.select
+			"ibhagwan/fzf-lua",
+		},
+		config = function(_)
+			require("emoji").setup()
+			-- optional for telescope integration
+			local ts = require("telescope").load_extension("emoji")
+			vim.keymap.set("n", "<leader>se", ts.emoji, { desc = "[S]earch [E]moji" })
+		end,
 	},
 }

@@ -52,3 +52,8 @@ vim.keymap.set("n", "<leader>gi", gitignore.generate, { desc = "Generate .gitign
 vim.keymap.set('n', '<leader>dh', function() require("duck").hatch("🐤", 5) end, { desc = "hatch a duck" })
 vim.keymap.set('n', '<leader>dc', function() require("duck").cook() end, { desc = "cook a duck" })
 vim.keymap.set('n', '<leader>da', function() require("duck").cook_all() end, { desc = "cool all ducks" })
+
+-- emoji picker
+local emoji = require("emoji")
+local ts = require("telescope").load_extension("emoji")
+vim.keymap.set('n', '<leader>se', ts.emoji, { desc = "Search emoji" })
