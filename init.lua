@@ -87,3 +87,55 @@ require("telescope").setup({
 
 -- keep 4 lines between cursor and page border
 vim.opt.scrolloff = 4
+
+-- live-server
+local live_server_job = nil
+
+local function toggle_live_server()
+    -- If already running, stop it
+    if live_server_job then
+        vim.fn.jobstop(live_server_job)
+        live_server_job = nil
+        vim.notify("[live-server] stopped")
+        return
+    end
+
+    local dir  = vim.fn.expand('%:p:h')
+    local file = vim.fn.expand('%:t')
+
+    if file == '' then
+        vim.notify("[live-server] no file in current buffer", vim.log.levels.WARN)
+        return
+    end
+
+    live_server_job = vim.fn.jobstart(
+        { 'live-server', dir, '--open=' .. file },
+        {
+            on_exit = function()
+                live_server_job = nil
+                vim.notify("[live-server] exited")
+            end,
+        }
+    )
+
+    if live_server_job <= 0 then
+        vim.notify("[live-server] failed to start", vim.log.levels.ERROR)
+        live_server_job = nil
+    else
+        vim.notify("[live-server] serving " .. dir .. " → " .. file)
+    end
+end
+
+local function stop_live_server()
+    if live_server_job then
+        vim.fn.jobstop(live_server_job)
+        live_server_job = nil
+        vim.notify("[live-server] stopped")
+    else
+        vim.notify("[live-server] not running", vim.log.levels.WARN)
+    end
+end
+
+vim.keymap.set('n', '<leader>ls', toggle_live_server, { desc = 'Toggle live-server for current file' })
+vim.keymap.set('n', '<leader>lc', stop_live_server, { desc = 'Stop live-server' })
+vim.api.nvim_create_user_command('LiveServer', toggle_live_server, {})

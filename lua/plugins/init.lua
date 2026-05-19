@@ -117,14 +117,6 @@ return {
     -- 		"rcarriga/nvim-notify",
     -- 	},
     -- },
-    -- live preview for html (CURRENTLY BROKEN: attempts to boot powershell using 'pwsh' command which only works on PowerShell 5. I am using PowerShell 7)
-    {
-        "brianhuster/live-preview.nvim",
-        dependencies = {
-            "nvim-telescope/telescope.nvim",
-        },
-        lazy = false,
-    },
     -- mirror inserts to end of word object
     {
         "kylechui/nvim-surround",
@@ -243,14 +235,14 @@ return {
         dependencies = { "folke/snacks.nvim" },
         config = true,
         keys = {
-            { "<leader>c",  nil,                              desc = "Claude Code" },
-            { "<leader>cc", "<cmd>ClaudeCode<cr>",            desc = "Toggle Claude" },
-            { "<leader>cf", "<cmd>ClaudeCodeFocus<cr>",       desc = "Focus Claude" },
-            { "<leader>cr", "<cmd>ClaudeCode --resume<cr>",   desc = "Resume Claude" },
-            { "<leader>cC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+            { "<leader>c",   nil,                              desc = "Claude Code" },
+            { "<leader>cc",  "<cmd>ClaudeCode<cr>",            desc = "Toggle Claude" },
+            { "<leader>cf",  "<cmd>ClaudeCodeFocus<cr>",       desc = "Focus Claude" },
+            { "<leader>cr",  "<cmd>ClaudeCode --resume<cr>",   desc = "Resume Claude" },
+            { "<leader>cC",  "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
             { "<leader>csm", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
-            { "<leader>cb", "<cmd>ClaudeCodeAdd %<cr>",       desc = "Add current buffer" },
-            { "<leader>cs", "<cmd>ClaudeCodeSend<cr>",        mode = "v",                  desc = "Send to Claude" },
+            { "<leader>cb",  "<cmd>ClaudeCodeAdd %<cr>",       desc = "Add current buffer" },
+            { "<leader>cs",  "<cmd>ClaudeCodeSend<cr>",        mode = "v",                  desc = "Send to Claude" },
             {
                 "<leader>cs",
                 "<cmd>ClaudeCodeTreeAdd<cr>",
@@ -261,5 +253,5 @@ return {
             { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
             { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>",   desc = "Deny diff" },
         },
-    }
+    },
 }
