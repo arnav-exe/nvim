@@ -139,3 +139,20 @@ end
 vim.keymap.set('n', '<leader>ls', toggle_live_server, { desc = 'Toggle live-server for current file' })
 vim.keymap.set('n', '<leader>lc', stop_live_server, { desc = 'Stop live-server' })
 vim.api.nvim_create_user_command('LiveServer', toggle_live_server, {})
+
+
+-- "<leader>im" to insert python main block after 2 newlines
+vim.keymap.set("n", "<leader>im", function()
+	local lines = {
+		"",
+		"",
+		'if __name__ == "__main__":',
+		"    ",
+	}
+	local row = vim.api.nvim_win_get_cursor(0)[1]
+	vim.api.nvim_buf_set_lines(0, row, row, false, lines)
+
+	-- place cursor on indented blank line
+	vim.api.nvim_win_set_cursor(0, { row + 4, 4 })
+	vim.cmd("startinsert")
+end, { desc = "Insert Python main block" })
