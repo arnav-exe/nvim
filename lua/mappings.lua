@@ -57,3 +57,7 @@ vim.keymap.set('n', '<leader>da', function() require("duck").cook_all() end, { d
 local emoji = require("emoji")
 local ts = require("telescope").load_extension("emoji")
 vim.keymap.set('n', '<leader>se', ts.emoji, { desc = "Search emoji" })
+
+-- live-preview.nvim
+vim.keymap.set('n', '<leader>ls', "<cmd>LivePreview start<CR>", { desc = "Start Live Preview" })
+vim.keymap.set('n', '<leader>lc', "<cmd>LivePreview close<CR>", { desc = "Close Live Preview" })
