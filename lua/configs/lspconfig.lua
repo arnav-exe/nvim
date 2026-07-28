@@ -34,12 +34,8 @@ require("mason").setup()
 -- mason setup
 require("mason").setup()
 require("mason-lspconfig").setup({
-  handlers = {
-    function(server_name)
-      if server_name ~= "pylsp" then
-        require("lspconfig")[server_name].setup({})
-      end
-    end,
+  automatic_enable = {
+    exclude = { "eslint" },
   },
 })
 

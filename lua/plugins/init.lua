@@ -86,6 +86,14 @@ return {
 		ft = { "markdown" },
 	},
 	{
+		"nvim-treesitter/nvim-treesitter",
+		branch = "master",
+		opts = function(_, opts)
+			opts.ensure_installed = opts.ensure_installed or {}
+			vim.list_extend(opts.ensure_installed, { "markdown", "markdown_inline" })
+		end,
+	},
+	{
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
@@ -347,5 +355,15 @@ return {
 			local ts = require("telescope").load_extension("emoji")
 			vim.keymap.set("n", "<leader>se", ts.emoji, { desc = "[S]earch [E]moji" })
 		end,
+	},
+	{
+		"edluffy/hologram.nvim",
+	},
+	{
+		"brianhuster/live-preview.nvim",
+		dependencies = {
+			-- You can choose one of the following pickers
+			"nvim-telescope/telescope.nvim",
+		},
 	},
 }
