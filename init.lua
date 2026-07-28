@@ -32,11 +32,20 @@ dofile(vim.g.base46_cache .. "statusline")
 require("options")
 require("nvchad.autocmds")
 
+vim.api.nvim_create_user_command("TSInstallAll", function()
+	local spec = require("lazy.core.config").plugins["nvim-treesitter"]
+	local opts = type(spec.opts) == "table" and spec.opts or {}
+	require("nvim-treesitter.install").ensure_installed(opts.ensure_installed)
+end, { force = true })
+
 vim.schedule(function()
 	require("mappings")
 end)
 
 -- MY SHIT
+-- treat mdsvex (.svx) files as markdown for syntax highlighting
+vim.filetype.add({ extension = { svx = "markdown" } })
+
 -- default to 4 space
 vim.opt["tabstop"] = 4
 vim.opt["shiftwidth"] = 4
@@ -46,11 +55,11 @@ vim.opt.scrolloff = 4
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
--- ":EXP" to open windows explorer in current project dir
+-- ":EXP" to open file explorer in current project dir
 vim.api.nvim_create_user_command("EXP", function()
-	vim.cmd("silent !start explorer .")
+	vim.fn.jobstart({ "xdg-open", vim.fn.getcwd() }, { detach = true })
 end, {
-	desc = "Open Windows Explorer silently",
+	desc = "Open Nautilus file explorer silently",
 	force = true,
 })
 
