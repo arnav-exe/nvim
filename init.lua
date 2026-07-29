@@ -156,3 +156,6 @@ vim.keymap.set("n", "<leader>im", function()
 	vim.api.nvim_win_set_cursor(0, { row + 4, 4 })
 	vim.cmd("startinsert")
 end, { desc = "Insert Python main block" })
+
+-- treat mdsvex (.svx) files as markdown for syntax highlighting
+vim.filetype.add({ extension = { svx = "markdown" } })
