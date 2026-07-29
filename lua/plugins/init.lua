@@ -254,4 +254,8 @@ return {
             { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>",   desc = "Deny diff" },
         },
     },
+    {
+        "kelwin/vim-smali",
+        ft = "smali",
+    },
 }

@@ -70,3 +70,24 @@ cmp.setup({
 -- pyright lsp
 vim.lsp.enable('pyright')
 
+-- smali lsp
+vim.filetype.add({ extension = { smali = 'smali' } })
+
+local lspconfig = require('lspconfig')
+local configs = require('lspconfig.configs')
+
+if not configs.smali_lsp then
+  configs.smali_lsp = {
+    default_config = {
+      cmd = { 'java', '-jar', vim.fn.expand('~\\AppData\\Local\\nvim-data\\lsp\\smali-lsp-1.5.0.jar'), 'lsp' },
+      filetypes = { 'smali' },
+      root_dir = function(fname)
+        return lspconfig.util.root_pattern('AndroidManifest.xml', 'apktool.yml')(fname)
+          or vim.fn.fnamemodify(fname, ':h')
+      end,
+    },
+  }
+end
+
+lspconfig.smali_lsp.setup {}
+
