@@ -67,9 +67,6 @@ cmp.setup({
   },
 })
 
--- pyright lsp
-vim.lsp.enable('pyright')
-
 -- smali lsp
 vim.filetype.add({ extension = { smali = 'smali' } })
 
